@@ -3,7 +3,7 @@ import inspect
 import zipfile
 from pathlib import Path
 from dotenv import load_dotenv
-from core import Helper as h, Log
+from .log import Log
 from alive_progress import alive_bar
 
 

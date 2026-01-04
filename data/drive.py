@@ -1,8 +1,8 @@
 import os
 import psutil
-import win32com.client
 import win32api
-from core.console import open_cmd_select_menu
+import win32com.client
+from core.console.console import open_cmd_select_menu
 from data.logical_drive.type import NTFS
 from data.logical_drive.type import MTP
 

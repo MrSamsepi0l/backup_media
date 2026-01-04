@@ -1,4 +1,4 @@
-from cmd_menu import CmdMenu
+from .cmd_menu import CmdMenu
 
 def open_cmd_select_menu(options = ["Start", "Settings"]):
 	"""
