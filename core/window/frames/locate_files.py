@@ -3,7 +3,7 @@ import tkinter as tk
 from tkinter import ttk
 import threading
 from dataclasses import dataclass
-from core.helper import Helper as h
+from core import Helper as h
 from .destination_drive import DestinationDrive
 from .models.buttons.primary import PrimaryButton
 from .models.text.info import InfoText
@@ -11,14 +11,15 @@ from .models.progressbar import Progressbar
 
 @dataclass
 class Layout():
-	header_row			= 0
-	header_row_title 	= 0
+	header_row				= 0
+	header_row_title 		= 0
+	header_row_separator	= 1
 
-	body_row			= 1
-	body_row_dir_tree 	= 0
+	body_row				= 1
+	body_row_progressbar	= 0
 
-	footer_row 			= 2
-	footer_row_buttons 	= 0
+	footer_row 				= 2
+	footer_row_buttons 		= 0
 
 class LocateFiles(ttk.Frame):
 
@@ -45,30 +46,67 @@ class LocateFiles(ttk.Frame):
 
 	def _render_UI(self):
 
-		# Expand column
-		self.grid_columnconfigure(0, weight=1)
-
-		# Create text widget
-		text = InfoText(self, text='Locate media files on: ', high_text=self.app.get_metadata('selected_drive').name)
-		text.grid(row=0, column=0, padx=10, pady=10, sticky="w")
-
-		separator = ttk.Separator(self, orient="horizontal")
-		separator.grid(row=1, column=0, sticky="new")
+		# Render header | body | footer
+		self._render_header()
+		self._render_body()
+		self._render_footer()
 
 		# Create buttons
-		self._render_button('back_btn', PrimaryButton, text='Back', state='normal', row=3, command=self._command_back_button)
-		self._render_button('start_btn', PrimaryButton, text='Start', state='normal', row=3, command=self._command_start_button)
+		self._render_button('back_btn', PrimaryButton, text='Back', state='normal', command=self._command_back_button)
+		self._render_button('start_btn', PrimaryButton, text='Start', state='normal', command=self._command_start_button)
+
+	def _render_header(self):
+
+		# Make self x-axis expandable on header row
+		self.grid_columnconfigure(Layout.header_row, weight=1)
+
+		# Render header, expanding x-axis, non-expanding y-axis
+		self.header = ttk.Frame(self)
+		self.header.grid(row=Layout.header_row, column=0, sticky='nsew')
+		self.header.grid_columnconfigure(0, weight=1)
+
+		# Render headline
+		headline_text = 'Locate media files on: '
+		headline_text_high = self.app.get_metadata('selected_drive').name
+		headline = InfoText(self.header, text=headline_text, high_text=headline_text_high)
+		headline.grid(row=Layout.header_row_title, column=0, padx=10, pady=10, sticky='w')
+
+		# Horizontal line separator
+		separator = ttk.Separator(self.header, orient='horizontal')
+		separator.grid(row=Layout.header_row_separator, column=0, sticky='new')
+
+	def _render_body(self):
+
+		# Make self y-axis large expanding on body row
+		self.grid_rowconfigure(Layout.body_row, weight=15)
+
+		# Render body, expanding x-axis, large expanding y-axis
+		self.body = ttk.Frame(self)
+		self.body.grid(row=Layout.body_row, column=0, sticky='nsew')
+		self.body.grid_columnconfigure(0, weight=1)
+		self.body.grid_rowconfigure(Layout.body_row, weight=1)
+
+	def _render_footer(self):
+
+		# Make self y-axis expandable on footer row
+		self.grid_rowconfigure(Layout.footer_row, weight=1)
+
+		# Render footer, expanding x-axis, expanding y-axis
+		self.footer = ttk.Frame(self)
+		self.footer.grid(row=Layout.footer_row, column=0, sticky='nsew')
+		self.footer.grid_columnconfigure(0, weight=1)
+		self.footer.grid_rowconfigure(Layout.footer_row, weight=1)
 
 	def _run_process(self):
 
 		self.identify_file_locations()
 
-	def _render_button(self, key, Button, text, state, row, command):
+	def _render_button(self, key, Button, text, state, command):
 
 		# Create single button frame
 		if not self.button_frame:
-			self.button_frame = ttk.Frame(self)
-			self.button_frame.grid(row=row, column=0, sticky='se')
+			self.button_frame = ttk.Frame(self.footer)
+			self.button_frame.grid(row=Layout.footer_row_buttons, column=0, sticky='se')
 
 		# Add button to existing frame
 		btn = Button(self.button_frame, text=text, state=state, command = command)
@@ -111,8 +149,8 @@ class LocateFiles(ttk.Frame):
 		drive = self.app.get_metadata('selected_drive')
 
 		# Title row with percentage
-		self.progressbar = Progressbar(self, title='')
-		self.progressbar.grid(row=2, column=0, columnspan=2, sticky='ew')
+		self.progressbar = Progressbar(self.body, title='')
+		self.progressbar.grid(row=Layout.body_row_progressbar, column=0, columnspan=2, sticky='ew')
 		self.progressbar.columnconfigure(0, weight=1)
 
 		# Render progress bar

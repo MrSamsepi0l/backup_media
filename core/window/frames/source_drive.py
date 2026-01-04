@@ -41,43 +41,60 @@ class SourceDrive(ttk.Frame):
 		self._dir_tree_hover_row 	= None
 
 		# Draw UI
-		self.render_UI()
+		self._render_UI()
 
-	def render_UI(self):
+	def _render_UI(self):
 
-		# Render header, expanding x-axis, non-expanding y-axis
-		self.header = ttk.Frame(self)
-		self.grid_columnconfigure(Layout.header_row, weight=1)
-		self.header.grid(row=Layout.header_row, column=0, sticky='nsew')
-		self.header.grid_columnconfigure(0, weight=1)
-		ttk.Label(
-			self.header,
-			text='Choose drive/device where to copy media files from',
-			font=(None, 10, 'bold'),
-			padding=(10,5)).grid(row=Layout.header_row_title, column=0, sticky='w')
-
-		# Render body, expanding x-axis, large expanding y-axis
-		self.body = ttk.Frame(self)
-		self.grid_rowconfigure(Layout.body_row, weight=15)
-		self.body.grid(row=Layout.body_row, column=0, sticky='nsew')
-		self.body.grid_columnconfigure(0, weight=1)
-		self.body.grid_rowconfigure(Layout.body_row, weight=1)
-
-		# Render footer, expanding x-axis, expanding y-axis
-		self.footer = ttk.Frame(self)
-		self.grid_rowconfigure(Layout.footer_row, weight=1)
-		self.footer.grid(row=Layout.footer_row, column=0, sticky='nsew')
-		self.footer.grid_columnconfigure(0, weight=1)
-		self.footer.grid_rowconfigure(Layout.footer_row, weight=1)
+		# Render header | body | footer
+		self._render_header()
+		self._render_body()
+		self._render_footer()
 
 		# Init directory list frame
-		self.render_directory_list()
+		self._render_directory_list()
 
 		# Create buttons
 		self._render_button('back_btn', PrimaryButton, text='Back', state='normal', command=self._command_back_button)
 		self._render_button('next_btn', PrimaryButton, text='Next', state='disabled', command=self._command_next_button)
 
-	def render_directory_list(self):
+	def _render_header(self):
+
+		# Make self x-axis expandable on header row
+		self.grid_columnconfigure(Layout.header_row, weight=1)
+
+		# Render header, expanding x-axis, non-expanding y-axis
+		self.header = ttk.Frame(self)
+		self.header.grid(row=Layout.header_row, column=0, sticky='nsew')
+		self.header.grid_columnconfigure(0, weight=1)
+
+		# Create headline
+		headline_text = 'Choose drive/device where to copy media files from'
+		headline = ttk.Label(self.header, text=headline_text, font=(None, 10, 'bold'), padding=(10,5))
+		headline.grid(row=Layout.header_row_title, column=0, sticky='w')
+
+	def _render_body(self):
+
+		# Make self y-axis large expandable on body row
+		self.grid_rowconfigure(Layout.body_row, weight=15)
+
+		# Render body, expanding x-axis, expanding y-axis
+		self.body = ttk.Frame(self)
+		self.body.grid(row=Layout.body_row, column=0, sticky='nsew')
+		self.body.grid_columnconfigure(0, weight=1)
+		self.body.grid_rowconfigure(Layout.body_row, weight=1)
+
+	def _render_footer(self):
+
+		# Make self y-axis expanding on footer row
+		self.grid_rowconfigure(Layout.footer_row, weight=1)
+
+		# Render footer, expanding x-axis, expanding y-axis
+		self.footer = ttk.Frame(self)
+		self.footer.grid(row=Layout.footer_row, column=0, sticky='nsew')
+		self.footer.grid_columnconfigure(0, weight=1)
+		self.footer.grid_rowconfigure(Layout.footer_row, weight=1)
+
+	def _render_directory_list(self):
 
 		def _on_hover(event):
 			rowID = self.dir_tree.identify_row(event.y)

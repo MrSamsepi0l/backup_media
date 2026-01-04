@@ -4,7 +4,7 @@ import threading
 import tkinter as tk
 from tkinter import ttk
 from .buttons.primary import PrimaryButton
-from core.helper import Helper as h
+from core import Helper as h
 from PIL import Image, ImageTk
 
 class ImageList(ttk.Frame):

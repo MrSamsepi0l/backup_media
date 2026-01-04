@@ -1,5 +1,5 @@
 import os
-from core.log import Log
+from core import Log
 
 class UserInput:
 

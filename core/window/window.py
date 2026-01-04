@@ -1,5 +1,5 @@
 import os
-from core.helper import Helper as h
+from core import Helper as h
 import tkinter as tk
 from tkinter import ttk
 from PIL import Image, ImageTk
@@ -19,11 +19,11 @@ class Window(tk.Tk):
 
 		# Metadata collected while processing
 		self.metadata = {
-			'selected_drive'		: None,
-			'path_medias_to_copy'	: None,
-			'target_drive'			: None,
-			'unique_medias'			: [],
-			'duplicate_medias'		: [],
+			'selected_drive'				: None,
+			'path_medias_to_copy'			: None,
+			'target_drive'					: None,
+			'unique_medias'					: [],
+			'duplicate_medias'				: [],
 		}
 
 		# List of available frames and if they should be created on init
@@ -40,13 +40,13 @@ class Window(tk.Tk):
 		]
 
 		# Init process, start and stay in program GUI
-		self._create_window()
+		self._render_window()
 		self.mainloop()
 
 	##############################################
 	#				Internal usage				 #
 	##############################################
-	def _create_window(self):
+	def _render_window(self):
 
 		# Configure main window
 		title = setup.get_program_title()
@@ -112,16 +112,16 @@ class Window(tk.Tk):
 
 	def _render_header(self):
 
-		header_frame = ttk.Frame(self, relief='raised')
-		header_frame.grid(row=0, column=0, sticky='nsew') # full width
-		header_frame.grid_rowconfigure(0, weight=1)
-		header_frame.grid_columnconfigure(0, weight=1)	# center content horizontally
+		self.header = ttk.Frame(self, relief='raised')
+		self.header.grid(row=0, column=0, sticky='nsew') # full width
+		self.header.grid_rowconfigure(0, weight=1)
+		self.header.grid_columnconfigure(0, weight=1)	# center content horizontally
 
 		# Load image
 		self.original_image = Image.open(self.image_path)
 
 		# Canvas for background image
-		self.canvas = tk.Canvas(header_frame, height=140, highlightthickness=0)
+		self.canvas = tk.Canvas(self.header, height=140, highlightthickness=0)
 		self.canvas.grid(row=0, column=0, sticky='nsew')
 
 		# Draw image and bind event
@@ -146,7 +146,7 @@ class Window(tk.Tk):
 			frame.tkraise()
 			return
 
-		# Otherwise, search for matching frame in list, overwrite and re-create it
+		# Otherwise search for matching frame in list, overwrite and re-create it
 		for Frame, cl_name, on_init in self.frame_lib:
 			if cl_name == name:
 				frame = Frame(self.container)

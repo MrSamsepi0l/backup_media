@@ -1,6 +1,6 @@
 import os
 import ctypes
-from core.helper import Helper as h
+from core import Helper as h
 from dotenv import load_dotenv
 from dataclasses import dataclass
 from .console.windows_path_completer import WindowsPathCompleter

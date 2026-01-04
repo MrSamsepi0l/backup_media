@@ -3,8 +3,9 @@ import string
 import ctypes
 import tkinter as tk
 from tkinter import ttk
+from core import Helper as h
 from core.helper import Helper as h
-from config.user.user import User
+from config import User
 from core.setup.design import Design
 from .inspection import Inspection
 from .models.buttons.primary import PrimaryButton

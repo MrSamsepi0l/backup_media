@@ -1,8 +1,7 @@
 import os
 import json
-from core.helper import Helper as h
-from core.log import Log
-from config.user.input import UserInput
+from core import Helper as h, Log
+from .input import UserInput
 
 class User:
 

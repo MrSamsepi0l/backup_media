@@ -3,11 +3,9 @@ from core.setup.setup import setup
 from data.drive import Drive
 from data.colors import Colors
 from data.media import Media
-from core.helper import Helper as h
-from core.log import Log
-from core.sync import DirectorySynchronizer
-from config.user.user import User
-from core.window.window import Window
+from core import Helper as h, Log, DirectorySynchronizer
+from config import User
+from core.window import Window
 
 def run_console():
 
