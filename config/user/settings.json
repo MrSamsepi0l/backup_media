@@ -1,0 +1,6 @@
+{
+    "PATH_TO_MAIN_DRIVE": "D:\\Bilder",
+    "PATH_TO_BACKUP_DRIVE": "e:\\bilder",
+    "PATH_TO_BACKUP_ZIP": "D:\\Backup (zips)",
+    "BACKUP_ZIP_FILENAME": "backup_medias_by_script"
+}
