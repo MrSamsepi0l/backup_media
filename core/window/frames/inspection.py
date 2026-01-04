@@ -1,7 +1,7 @@
 import os
 import tkinter as tk
 from tkinter import ttk
-from core.helper import Helper as h
+from core import Helper as h
 from data.media import Media
 from .models.image_list import ImageList
 from .models.buttons.primary import PrimaryButton

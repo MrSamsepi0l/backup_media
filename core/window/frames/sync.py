@@ -3,7 +3,7 @@ import tkinter as tk
 import threading
 from tkinter import ttk
 from data.drive import Drive
-from core.helper import Helper as h
+from core import Helper as h
 from .models.text.info import InfoText
 from .models.buttons.primary import PrimaryButton
 from .models.progressbar import Progressbar

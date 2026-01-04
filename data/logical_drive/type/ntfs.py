@@ -1,5 +1,5 @@
 import os
-from core.helper import Helper as h
+from core import Helper as h
 from core.setup.setup import setup
 
 class NTFS:

@@ -2,9 +2,8 @@ import os
 import magic
 import shutil
 import unicodedata
-from core.log import Log
+from core import Helper as h, Log
 from alive_progress import alive_bar
-from core.helper import Helper as h
 
 class Media:
 
