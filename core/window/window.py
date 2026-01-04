@@ -4,8 +4,8 @@ import tkinter as tk
 from tkinter import ttk
 from PIL import Image, ImageTk
 from core.setup.setup import setup
-from core.setup.window.frames.root_frame import RootFrame
-from core.setup.window.frames.source_drive import SourceDrive
+from core.window.frames.root_frame import RootFrame
+from core.window.frames.source_drive import SourceDrive
 from .frames.locate_files import LocateFiles
 from .frames.destination_drive import DestinationDrive
 from .frames.inspection import Inspection

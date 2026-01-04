@@ -7,11 +7,9 @@ from core.helper import Helper as h
 from core.log import Log
 from core.sync import DirectorySynchronizer
 from config.user.user import User
-from core.setup.window.window import Window
+from core.window.window import Window
 
 def run_console():
-
-	# setup = Setup()
 
 	# Get list of connected devices/drives
 	drive = Drive()
@@ -103,26 +101,17 @@ def run_console():
 
 def run_GUI():
 
-	h.get_base_path()
-
 	# Create instance
 	window = Window()
-
-	h.log(f'test')
-
-	# Show source directory
-	# window.show_frame('SourceDirectory')
 
 
 if __name__ == "__main__":
 
 	try:
 
-		# Load program mode defined in setup
+		# Load and run program mode defined in setup
 		program_mode = setup.get_program_mode()
-
 		run_console() if program_mode == 'console' else run_GUI()
-
 
 	except KeyboardInterrupt:
 		print()
